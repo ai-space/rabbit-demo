@@ -1,0 +1,5 @@
+rootProject.name = 'RabbitDemo'
+
+include 'common',
+        'rabbit-consumer',
+        'rabbit-producer'
