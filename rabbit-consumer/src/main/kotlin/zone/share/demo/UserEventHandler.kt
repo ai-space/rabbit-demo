@@ -4,7 +4,6 @@ import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
 import org.springframework.stereotype.Component
 import zone.share.demo.common.UserCreatedEvent
-import java.lang.RuntimeException
 
 /**
  * UserEventHandler
@@ -20,7 +19,9 @@ class UserEventHandler {
     @EventHandler
     fun on(event: UserCreatedEvent) {
         println("====input${++index}")
-        throw RuntimeException("错误")
+        if (index % 2 == 0) {
+            throw Exception("错误")
+        }
     }
 
 }

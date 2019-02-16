@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import zone.share.demo.AMQPConfig.Companion.queue
+import zone.share.demo.AMQPConfig.Companion.redirect
 
 @Configuration
 class RabbitConfig {
@@ -24,25 +26,25 @@ class RabbitConfig {
     @Bean
     @Qualifier("dead-queue")
     fun deadQueue(): Queue {
-        return QueueBuilder.durable("zone.share.demo.consumer").build()
+        return QueueBuilder.durable(queue).build()
     }
 
     @Bean
     @Qualifier("redirect-queue")
     fun redirectQueue(): Queue {
-        return QueueBuilder.durable("zone.share.demo.consumer.redirect").build()
+        return QueueBuilder.durable(redirect).build()
     }
 
     @Bean
     @Qualifier("dead-binding")
     fun deadBinding(): Binding {
-        return Binding("zone.share.demo.consumer", Binding.DestinationType.QUEUE, properties.exchange, "#", null)
+        return Binding(queue, Binding.DestinationType.QUEUE, properties.exchange, "#", null)
     }
 
     @Bean
     @Qualifier("redirect-binding")
     fun redirectBinding(): Binding {
-        return Binding("zone.share.demo.consumer.redirect", Binding.DestinationType.QUEUE, properties.exchange, "#", null)
+        return Binding(redirect, Binding.DestinationType.QUEUE, properties.exchange, "#", null)
     }
 
 }

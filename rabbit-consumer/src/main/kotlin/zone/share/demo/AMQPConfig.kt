@@ -11,11 +11,17 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class AMQPConfig {
 
+    companion object {
+        const val queue = "zone.queue"
+
+        const val redirect = "zone.redirect"
+    }
+
     @Bean
     fun axonQueueMessageSource(messageConverter: AMQPMessageConverter): SpringAMQPMessageSource {
         return object : SpringAMQPMessageSource(messageConverter) {
-            @RabbitListener(queues = ["zone.share.demo.consumer"])
-            override fun onMessage(message: Message, channel: Channel) {
+            @RabbitListener(queues = [queue])
+            override fun onMessage(message: Message?, channel: Channel?) {
                 super.onMessage(message, channel)
             }
         }
